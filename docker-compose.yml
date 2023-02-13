@@ -4,10 +4,10 @@ services:
     image: mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: G2d2h5N8n8Z1Q7Q
+      - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
   terryscord:
     image: ghcr.io/suiramdev/terryscord:main
     environment:
-      TOKEN: <bot token>
-      MONGODB_URI: <mongodb uri>
+      - TOKEN=$TOKEN
+      - MONGODB_URI=$MONGODB_URI

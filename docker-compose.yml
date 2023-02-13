@@ -1,0 +1,13 @@
+version: '3.1'
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: G2d2h5N8n8Z1Q7Q
+  terryscord:
+    image: ghcr.io/suiramdev/terryscord:main
+    environment:
+      TOKEN: <bot token>
+      MONGODB_URI: <mongodb uri>

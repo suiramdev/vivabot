@@ -13,8 +13,6 @@ export const command: Command = {
   ],
   defaultMemberPermissions: [PermissionFlagsBits.Administrator],
   callback(client, interaction) {
-    interaction.deferReply();
     interaction.channel.send(JSON.parse(interaction.options.getString("data")));
-    interaction.deleteReply();
   },
 };

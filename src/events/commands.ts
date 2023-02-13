@@ -1,26 +1,24 @@
-import { Interaction } from "discord.js";
+import { Events, Interaction } from "discord.js";
 import Event from "../types/Event";
+import { errorEmbed } from "../utils/embeds";
 
 export const event: Event = {
-  name: "interactionCreate",
-  callback(client, interaction?: Interaction) {
+  name: Events.InteractionCreate,
+  async callback(client, interaction?: Interaction) {
     if (!interaction.isChatInputCommand()) return;
     try {
-      client.commands
+      await client.commands
         .get(interaction.commandName)
         .callback(client, interaction);
+      if (!interaction.replied) {
+        await interaction.deferReply();
+        await interaction.deleteReply();
+      }
     } catch (error) {
-      interaction.reply({
-        embeds: [
-          {
-            title: "Error",
-            description: error.message,
-            color: 0xff0000,
-          },
-        ],
-        ephemeral: true,
+      if (!interaction.deferred) await interaction.deferReply();
+      await interaction.editReply({
+        embeds: [errorEmbed(error.message ?? "Une erreur est survenue.")],
       });
-      return;
     }
   },
 };

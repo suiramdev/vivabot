@@ -14,7 +14,6 @@ export const command: Command = {
   ],
   defaultMemberPermissions: [PermissionFlagsBits.ManageMessages],
   async callback(client, interaction) {
-    await interaction.deferReply();
     let amount = interaction.options.getInteger("amount") + 1;
     for (let i = 0; i < amount / 100; i++) {
       interaction.channel.bulkDelete(amount > 100 ? 100 : amount);

@@ -1,9 +1,9 @@
-import { GuildMemberRoleManager, Interaction } from "discord.js";
-import setup from "../models/setup";
-import Event from "../types/Event";
+import { Events, GuildMemberRoleManager, Interaction } from "discord.js";
+import setup from "../../models/setup";
+import Event from "../../types/Event";
 
 export const event: Event = {
-  name: "interactionCreate",
+  name: Events.InteractionCreate,
   async callback(client, interaction: Interaction) {
     if (interaction.isButton() && interaction.id == "authentify") {
       interaction.deferReply();

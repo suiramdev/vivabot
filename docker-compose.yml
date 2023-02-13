@@ -6,8 +6,17 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USERNAME
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
+    ports:
+      - 27017:27017
   bot:
     image: ghcr.io/suiramdev/terryscord:main
     environment:
       - TOKEN=$TOKEN
       - MONGODB_URI=$MONGODB_URI
+
+networks:
+  default:
+    external:
+      name: terryscord
+      ports:
+        - 27017:27017

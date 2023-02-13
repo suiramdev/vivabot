@@ -1,10 +1,7 @@
-import {
-  ApplicationCommandOptionType,
-  ButtonStyle,
-  ComponentType,
-} from "discord.js";
-import setup from "../../models/setup";
+import { ApplicationCommandOptionType } from "discord.js";
+import setup from "../../models/Setup";
 import Command from "../../types/Command";
+import { successEmbed } from "../../utils/embeds";
 
 export const command: Command = {
   name: "auth",
@@ -33,7 +30,10 @@ export const command: Command = {
           guild: interaction.guildId,
         },
         {
-          data: interaction.options.getRole("role")?.id,
+          data: {
+            channel: interaction.channelId,
+            role: interaction.options.getRole("role")?.id,
+          },
         },
         {
           new: true,
@@ -41,31 +41,11 @@ export const command: Command = {
         }
       );
       document.save();
-      interaction.channel.send({
+      await interaction.reply({
         embeds: [
-          {
-            title: "Authentification",
-            description:
-              "1・Soyez toujours aimable et respectueux envers les autres membres.\n2・N'envoyez pas de messages en série ou de spam.\n3・N'utilisez pas de langage vulgaire ou offensant.\n4・Évitez les publicités non sollicitées.",
-            footer: {
-              text: "En cliquant sur le bouton ci-dessous, vous acceptez les règles du serveur.",
-            },
-            color: 0x2d7d46,
-          },
+          successEmbed("Le système d'authentification a bien été configuré !"),
         ],
-        components: [
-          {
-            type: ComponentType.ActionRow,
-            components: [
-              {
-                type: ComponentType.Button,
-                customId: "auth",
-                label: "Accepter",
-                style: ButtonStyle.Success,
-              },
-            ],
-          },
-        ],
+        ephemeral: true,
       });
     }
   },

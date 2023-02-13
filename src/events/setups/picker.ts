@@ -1,5 +1,5 @@
 import { Events, GuildMemberRoleManager, Interaction } from "discord.js";
-import setup from "../../models/setup";
+import setup from "../../models/Setup";
 import Event from "../../types/Event";
 
 export const event: Event = {

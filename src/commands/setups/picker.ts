@@ -3,9 +3,9 @@ import {
   ButtonStyle,
   ComponentType,
 } from "discord.js";
-import setup from "../../models/setup";
+import Setup from "../../models/Setup";
 import Command from "../../types/Command";
-import { errorEmbed, successEmbed } from "../../utils/embeds";
+import { successEmbed } from "../../utils/embeds";
 
 export const command: Command = {
   name: "picker",
@@ -46,7 +46,7 @@ export const command: Command = {
   defaultMemberPermissions: ["Administrator"],
   async callback(client, interaction) {
     if (interaction.options.getSubcommand() === "add") {
-      let document = await setup.findOneAndUpdate(
+      let setup = await Setup.findOneAndUpdate(
         {
           name: "picker",
           guild: interaction.guildId,
@@ -61,7 +61,7 @@ export const command: Command = {
           upsert: true,
         }
       );
-      document.save();
+      setup.save();
       await interaction.reply({
         embeds: [
           successEmbed(
@@ -71,7 +71,7 @@ export const command: Command = {
         ephemeral: true,
       });
     } else if (interaction.options.getSubcommand() === "remove") {
-      const document = await setup.findOneAndUpdate(
+      const setup = await Setup.findOneAndUpdate(
         {
           name: "picker",
           guild: interaction.guildId,
@@ -85,7 +85,7 @@ export const command: Command = {
           upsert: true,
         }
       );
-      document.save();
+      setup.save();
       await interaction.reply({
         embeds: [
           successEmbed(
@@ -95,7 +95,7 @@ export const command: Command = {
         ephemeral: true,
       });
     } else if (interaction.options.getSubcommand() === "setup") {
-      const document = await setup.findOne({
+      const setup = await Setup.findOne({
         name: "picker",
         guild: interaction.guildId,
       });
@@ -111,7 +111,7 @@ export const command: Command = {
         components: [
           {
             type: ComponentType.ActionRow,
-            components: document.data.map((roleId: string) => ({
+            components: setup.data.map((roleId: string) => ({
               type: ComponentType.Button,
               customId: `pick-${roleId}`,
               label: interaction.guild.roles.cache.get(roleId)?.name,

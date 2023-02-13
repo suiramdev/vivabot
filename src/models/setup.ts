@@ -1,9 +1,9 @@
-import { model, Schema, SchemaType } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const schema = new Schema({
+  guild: { type: String, required: true },
   name: { type: String, required: true },
   data: { type: Object, required: true },
-  guild: { type: String, required: true },
 });
 
 export default model("Setup", schema);

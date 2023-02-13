@@ -12,6 +12,7 @@ const client = new Terry({
     IntentsBitField.Flags.GuildMessageReactions,
     IntentsBitField.Flags.DirectMessages,
     IntentsBitField.Flags.DirectMessageReactions,
+    IntentsBitField.Flags.MessageContent,
   ],
 });
 client.login(process.env.TOKEN);

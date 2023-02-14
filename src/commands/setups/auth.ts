@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType } from "discord.js";
-import setup from "../../models/Setup";
+import Setup from "../../models/Setup";
 import Command from "../../types/Command";
 import { successEmbed } from "../../utils/embeds";
 
@@ -24,7 +24,7 @@ export const command: Command = {
   defaultMemberPermissions: ["Administrator"],
   async callback(client, interaction) {
     if (interaction.options.getSubcommand() === "setup") {
-      const document = await setup.findOneAndUpdate(
+      const document = await Setup.findOneAndUpdate(
         {
           name: "auth",
           guild: interaction.guildId,

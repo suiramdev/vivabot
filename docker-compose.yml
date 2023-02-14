@@ -8,8 +8,6 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
     ports:
       - 27017:27017
-    networks:
-      - terryscord
   bot:
     image: ghcr.io/suiramdev/terryscord:main
     environment:
@@ -19,9 +17,3 @@ services:
       - 3000:3000
     depends_on:
       - mongo
-    networks:
-      - terryscord
-
-networks:
-  terryscord:
-    driver: bridge

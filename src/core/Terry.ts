@@ -74,7 +74,7 @@ class Terry extends Client {
         }
         const { command } = await import(file);
 
-        this.guilds.cache.get("1073608738382041269").commands.create(command);
+        this.application.commands.create(command);
         this.commands.set(command.name, command);
         console.log(colors.grey("  ╰ Loaded %s"), file);
       });

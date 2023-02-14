@@ -23,6 +23,9 @@ async function rssLookup(client: Terry) {
         await channel.send({
           embeds: [
             {
+              author: {
+                name: item.author || item.creator,
+              },
               title: item.title,
               description: item.contentSnippet,
               url: item.link,

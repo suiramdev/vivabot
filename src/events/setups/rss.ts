@@ -27,7 +27,10 @@ async function rssLookup(client: Terry) {
                 name: item.author || item.creator,
               },
               title: item.title,
-              description: item.contentSnippet,
+              description:
+                item.contentSnippet.length > 200
+                  ? item.contentSnippet.substring(0, 200) + "..."
+                  : item.contentSnippet,
               url: item.link,
               timestamp: item.isoDate,
             },

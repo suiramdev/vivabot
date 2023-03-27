@@ -5,7 +5,7 @@ import * as path from "path";
 import Command from "../types/Command";
 import mongoose from "mongoose";
 
-class Terry extends Client {
+class VivaBot extends Client {
   public commands: Collection<string, Command>;
 
   constructor(options: ClientOptions) {
@@ -86,4 +86,4 @@ class Terry extends Client {
   }
 }
 
-export default Terry;
+export default VivaBot;

@@ -1,8 +1,8 @@
-import Terry from "../core/Terry";
+import VivaBot from "../core/VivaBot";
 
 type Event = {
   name: string;
-  callback: (client: Terry, ...args) => void;
+  callback: (client: VivaBot, ...args) => void;
 };
 
 export default Event;

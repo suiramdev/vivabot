@@ -1,4 +1,4 @@
-version: '3.1'
+version: "3.1"
 services:
   mongo:
     image: mongo
@@ -9,7 +9,7 @@ services:
     ports:
       - 27017:27017
   bot:
-    image: ghcr.io/suiramdev/terryscord:main
+    image: ghcr.io/suiramdev/vivabot:main
     environment:
       - TOKEN=$TOKEN
       - MONGODB_URI=$MONGODB_URI

@@ -1,10 +1,10 @@
 import * as dotenv from "dotenv";
-import Terry from "./core/Terry";
+import VivaBot from "./core/VivaBot";
 import { IntentsBitField } from "discord.js";
 
 dotenv.config();
 
-const client = new Terry({
+const client = new VivaBot({
   intents: [
     IntentsBitField.Flags.Guilds,
     IntentsBitField.Flags.GuildMembers,

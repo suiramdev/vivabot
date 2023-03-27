@@ -8,17 +8,17 @@ import Command from "../../types/Command";
 import { successEmbed } from "../../utils/embeds";
 
 export const command: Command = {
-  name: "picker",
-  description: "Role picker",
+  name: "selector",
+  description: "Role selector",
   options: [
     {
       name: "add",
-      description: "Add a role to a picker",
+      description: "Add a role to a selector",
       type: ApplicationCommandOptionType.Subcommand,
       options: [
         {
           name: "id",
-          description: "The identifier of the picker to assign to",
+          description: "The identifier of the selector to assign to",
           type: ApplicationCommandOptionType.String,
           required: true,
         },
@@ -32,12 +32,12 @@ export const command: Command = {
     },
     {
       name: "remove",
-      description: "Remove a role from a picker",
+      description: "Remove a role from a selector",
       type: ApplicationCommandOptionType.Subcommand,
       options: [
         {
           name: "id",
-          description: "The identifier of the picker to remove from",
+          description: "The identifier of the selector to remove from",
           type: ApplicationCommandOptionType.String,
           required: true,
         },
@@ -51,12 +51,18 @@ export const command: Command = {
     },
     {
       name: "setup",
-      description: "Setup the role picker here",
+      description: "Setup the role selector here",
       type: ApplicationCommandOptionType.Subcommand,
       options: [
         {
           name: "id",
-          description: "The identifier of the picker to setup",
+          description: "The identifier of the selector to setup",
+          type: ApplicationCommandOptionType.String,
+          required: true,
+        },
+        {
+          name: "placeholder",
+          description: "The placeholder message of the selector",
           type: ApplicationCommandOptionType.String,
           required: true,
         },
@@ -80,7 +86,7 @@ export const command: Command = {
     if (interaction.options.getSubcommand() === "add") {
       let setup = await Setup.findOneAndUpdate(
         {
-          name: "picker",
+          name: "selector",
           guild: interaction.guildId,
           id: interaction.options.getString("id"),
         },
@@ -96,15 +102,13 @@ export const command: Command = {
       );
       setup.save();
       await interaction.reply({
-        embeds: [
-          successEmbed("The role has been added to the list of roles to pick."),
-        ],
+        embeds: [successEmbed("The role has been added to the list.")],
         ephemeral: true,
       });
     } else if (interaction.options.getSubcommand() === "remove") {
       const setup = await Setup.findOneAndUpdate(
         {
-          name: "picker",
+          name: "selector",
           guild: interaction.guildId,
           id: interaction.options.getString("id"),
         },
@@ -119,17 +123,14 @@ export const command: Command = {
       );
       setup.save();
       await interaction.reply({
-        embeds: [
-          successEmbed(
-            "The role has been removed from the list of roles to pick."
-          ),
-        ],
+        embeds: [successEmbed("The role has been removed from the list.")],
         ephemeral: true,
       });
     } else if (interaction.options.getSubcommand() === "setup") {
       const setup = await Setup.findOne({
-        name: "picker",
+        name: "selector",
         guild: interaction.guildId,
+        id: interaction.options.getString("id"),
       });
       await interaction.channel.send({
         embeds: [
@@ -142,12 +143,19 @@ export const command: Command = {
         components: [
           {
             type: ComponentType.ActionRow,
-            components: setup.data.map((roleId: string) => ({
-              type: ComponentType.Button,
-              customId: `pick-${roleId}`,
-              label: interaction.guild.roles.cache.get(roleId)?.name,
-              style: ButtonStyle.Secondary,
-            })),
+            components: [
+              {
+                customId: interaction.options.getString("id"),
+                type: ComponentType.StringSelect,
+                placeholder: interaction.options.getString("placeholder"),
+                minValues: 1,
+                maxValues: 1,
+                options: setup.data.map((roleId: string) => ({
+                  value: roleId,
+                  label: interaction.guild.roles.cache.get(roleId)?.name,
+                })),
+              },
+            ],
           },
         ],
       });

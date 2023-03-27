@@ -1,12 +1,11 @@
 import {
   ApplicationCommandData,
   ChatInputCommandInteraction,
-  CommandInteraction,
 } from "discord.js";
-import Terry from "../core/Terry";
+import VivaBot from "../core/VivaBot";
 
 type Command = ApplicationCommandData & {
-  callback: (client: Terry, interaction: ChatInputCommandInteraction) => any;
+  callback: (client: VivaBot, interaction: ChatInputCommandInteraction) => any;
 };
 
 export default Command;

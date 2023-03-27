@@ -7,13 +7,13 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USERNAME
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
     ports:
-      - 27017:27017
+      - $MONGO_PORT:$MONGO_PORT
   bot:
     image: ghcr.io/suiramdev/vivabot:main
     environment:
       - TOKEN=$TOKEN
       - MONGODB_URI=$MONGODB_URI
     ports:
-      - 3000:3000
+      - $NODE_PORT:$NODE_PORT
     depends_on:
       - mongo
